@@ -9,14 +9,14 @@ Router.onRouteChangeError = () => { NProgress.done() }
 
 function Header() {
   const router = useRouter();
-  const user = false;
+  const user = true;
 
   function isActive(route) {
     return route === router.pathname;
   }
 
   return (
-    <Menu fluid id="menu" inverted>
+    <Menu stackable fluid id="menu" inverted>
       <Container text>
 
         <Link href="/">
