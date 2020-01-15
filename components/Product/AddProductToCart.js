@@ -1,4 +1,4 @@
-import { Input } from 'semantic-ui-react';
+import { Input } from "semantic-ui-react";
 
 function AddProductToCart() {
   return (
@@ -6,15 +6,14 @@ function AddProductToCart() {
       type="number"
       min="1"
       placeholder="Quantity"
-      value="1"
+      value={1}
       action={{
         color: "orange",
         content: "Add to Cart",
         icon: "plus cart"
       }}
-
     />
-  )
+  );
 }
 
 export default AddProductToCart;

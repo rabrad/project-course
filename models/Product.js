@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import shortid from 'shortid';
+import mongoose from "mongoose";
+import shortid from "shortid";
 
 const { String, Number } = mongoose.Schema.Types;
 
@@ -15,7 +15,7 @@ const ProductSchema = new mongoose.Schema({
   sku: {
     type: String,
     unique: true,
-    default: shortid.generate // this is spacial for mongoDb  --- // the normal code:  default: shortid.generate 
+    default: shortid.generate()
   },
   description: {
     type: String,
@@ -24,8 +24,8 @@ const ProductSchema = new mongoose.Schema({
   mediaUrl: {
     type: String,
     required: true
-  },
-})
+  }
+});
 
 export default mongoose.models.Product ||
-  mongoose.model('Product', ProductSchema)
+  mongoose.model("Product", ProductSchema);
