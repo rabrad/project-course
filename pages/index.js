@@ -7,61 +7,51 @@ import { Search, Grid, Header, Segment } from 'semantic-ui-react';
 import _ from 'lodash'
 
 
-
-
-
-
 function Home({ products, totalPages }) {
   const [isLoading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
   const [value, setValue] = useState('');
 
-  // const source = products.reduce((accumulator, currentValue) => {
+  const source = products.map(product => {
+    return {
+      title: product.name,
+      price: JSON.stringify(product.price),
+      image: product.mediaUrl,
+      href: `/product?_id=${product._id}`
+    };
+  });
 
-  //   title: product.name;
-  //   price: product.price;
-  //   mediaUrl: product.mediaUrl
-  // }, []
-
-
-
-
-  // )
-
-  const handleResultSelect = (e, { result }) => setValue(result.name);
+  const handleResultSelect = (e, { result }) => setValue(result.title);
 
   const handleSearchChange = (e, { value }) => {
     setLoading(true);
     setValue(value);
-
     setTimeout(() => {
       if (value.length < 1) {
         setLoading(false);
-        setResults([])
-        setValue('');
-
+        setResults([]);
+        setValue("");
         return;
       }
-
-      const re = new RegExp(_.escapeRegExp(value), 'i')
-      const isMatch = (result) => re.test(result.name)
-
+      const re = new RegExp(_.escapeRegExp(value), "i");
+      const isMatch = result => re.test(result.title);
       setLoading(false);
-      setResults(_.filter(products, isMatch))
-
-    }, 300)
-  }
+      setResults(_.filter(source, isMatch));
+    }, 300);
+  };
 
 
   return (
     <>
-      <Grid>
+      <Grid >
         <Grid.Column width={6}>
           <Search
             loading={isLoading}
-            onResultSelect={(e, { result }) => handleResultSelect(e, { result })}
+            onResultSelect={(e, { result }) =>
+              handleResultSelect(e, { result })
+            }
             onSearchChange={_.debounce(handleSearchChange, 500, {
-              leading: true,
+              leading: true
             })}
             results={results}
             value={value}
